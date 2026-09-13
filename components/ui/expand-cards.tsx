@@ -20,7 +20,8 @@ const ExpandCards = ({ projects }: ExpandCardsProps) => {
 
   return (
     <div className="w-full">
-      <div className="flex w-full items-stretch justify-center gap-2">
+      {/* Desktop: horizontal accordion */}
+      <div className="hidden md:flex w-full items-stretch justify-center gap-2">
         {projects.map((project, idx) => {
           const isExpanded = idx === expandedIndex;
 
@@ -102,6 +103,55 @@ const ExpandCards = ({ projects }: ExpandCardsProps) => {
             </div>
           );
         })}
+      </div>
+
+      {/* Mobile: vertical stacked cards */}
+      <div className="flex flex-col gap-4 md:hidden">
+        {projects.map((project) => (
+          <div
+            key={project.name}
+            className="group relative overflow-hidden rounded-2xl"
+            style={{ height: "16rem" }}
+          >
+            {project.videoSrc ? (
+              <video
+                className="absolute inset-0 h-full w-full object-cover"
+                src={project.videoSrc}
+                poster={project.posterSrc}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+              />
+            ) : (
+              <img
+                className="absolute inset-0 h-full w-full object-cover"
+                src={project.posterSrc}
+                alt={project.name}
+              />
+            )}
+
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+
+            <div className="absolute inset-x-0 bottom-0 flex flex-col gap-2 p-5">
+              <h3 className="text-xl font-bold text-white">{project.name}</h3>
+              <p className="text-xs leading-relaxed text-white/60 line-clamp-2">
+                {project.summary}
+              </p>
+              <div className="flex flex-wrap gap-1.5 pt-1">
+                {project.tech.map((t) => (
+                  <span
+                    key={t}
+                    className="rounded-full border border-white/20 bg-white/10 px-2.5 py-0.5 text-[9px] font-medium uppercase tracking-wider text-white/70"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

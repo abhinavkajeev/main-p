@@ -219,8 +219,10 @@ export default function Home() {
       </AnimatePresence>
 
     <div className="bg-[#000000] text-white">
-      {/* ━━━━━ Pixel Cat follows cursor ━━━━━ */}
-      <PixelCat />
+      {/* ━━━━━ Pixel Cat follows cursor (hidden on mobile) ━━━━━ */}
+      <div className="hidden md:block">
+        <PixelCat />
+      </div>
 
 
       {/* ━━━━━ FLOATING LIQUID GLASS NAVBAR ━━━━━ */}
@@ -228,10 +230,10 @@ export default function Home() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
-        className="fixed top-4 left-1/2 z-50 -translate-x-1/2"
+        className="fixed top-4 left-1/2 z-50 -translate-x-1/2 w-[calc(100%-2rem)] max-w-fit"
       >
         <div
-          className="flex items-center gap-1 rounded-full px-2 py-2 sm:gap-2 sm:px-3"
+          className="flex items-center justify-center gap-0.5 rounded-full px-1.5 py-1.5 sm:gap-1 sm:px-3 sm:py-2"
           style={{
             background: "rgba(255, 255, 255, 0.06)",
             backdropFilter: "blur(24px) saturate(180%)",
@@ -241,21 +243,16 @@ export default function Home() {
               "0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08), inset 0 -1px 0 rgba(255, 255, 255, 0.02)",
           }}
         >
-
-
           {/* Nav Links */}
           {navLinks.map((link) => (
             <Link
               key={link.label}
               href={link.href}
-              className="rounded-full px-3 py-2 text-xs font-medium text-white/60 transition hover:bg-white/[0.08] hover:text-white sm:px-4 sm:text-sm"
+              className="whitespace-nowrap rounded-full px-2 py-1.5 text-[10px] font-medium text-white/60 transition hover:bg-white/[0.08] hover:text-white sm:px-3 sm:py-2 sm:text-xs md:px-4 md:text-sm"
             >
               {link.label}
             </Link>
           ))}
-
-          {/* CTA */}
-
         </div>
       </motion.nav>
 
@@ -289,7 +286,7 @@ export default function Home() {
                   initial={{ opacity: 0, y: 40 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.8, duration: 0.9, ease: "easeOut" }}
-                  className="text-5xl font-black leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-7xl xl:text-8xl"
+                  className="text-4xl font-black leading-[1.05] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl"
                 >
                   Hi, I&apos;m Abhinav{" "}
                   <span className="inline-block animate-[wave_2.5s_ease-in-out_infinite]">👋</span>
@@ -299,7 +296,7 @@ export default function Home() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 1.1, duration: 0.6 }}
-                  className="mt-4 max-w-xl text-lg leading-relaxed text-white/50 sm:text-lg lg:text-xl"
+                  className="mt-3 max-w-xl text-base leading-relaxed text-white/50 sm:mt-4 sm:text-lg lg:text-xl"
                 >
                   Code artisan and systems thinker. I build immersive web experiences and decentralized applications that push boundaries.
                 </motion.p>
@@ -329,7 +326,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.4, duration: 0.7 }}
-              className="mt-10 max-w-2xl"
+              className="mt-6 max-w-2xl sm:mt-10"
             >
               <h2 className="text-lg font-bold text-white sm:text-xl">About</h2>
               <p className="mt-3 text-sm leading-relaxed text-white/45 sm:text-base">
@@ -342,24 +339,24 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.7, duration: 0.6 }}
-              className="mt-8 flex flex-wrap items-center gap-4"
+              className="mt-6 flex flex-wrap items-center gap-3 sm:mt-8 sm:gap-4"
             >
               <Link
                 href="#projects"
-                className="group flex items-center gap-2 rounded-full bg-white px-7 py-3 text-sm font-semibold text-black transition hover:bg-white/90 hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]"
+                className="group flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-white/90 hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] sm:px-7 sm:py-3"
               >
                 View Projects
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
               <Link
                 href="#connect"
-                className="rounded-full border border-white/20 px-7 py-3 text-sm font-semibold text-white/70 transition hover:border-white/50 hover:text-white hover:bg-white/[0.05]"
+                className="rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-white/70 transition hover:border-white/50 hover:text-white hover:bg-white/[0.05] sm:px-7 sm:py-3"
               >
                 Contact Me
               </Link>
 
               {/* Social Icons inline */}
-              <div className="flex items-center gap-3 ml-2">
+              <div className="flex items-center gap-3 ml-0 sm:ml-2">
                 <Link
                   href="https://github.com/abhinavkajeev"
                   target="_blank"
