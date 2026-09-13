@@ -36,16 +36,24 @@ const ExpandCards = ({ projects }: ExpandCardsProps) => {
               onMouseEnter={() => setExpandedIndex(idx)}
             >
               {/* Video / Poster */}
-              <video
-                className="absolute inset-0 h-full w-full object-cover"
-                src={project.videoSrc}
-                poster={project.posterSrc}
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-              />
+              {project.videoSrc ? (
+                <video
+                  className="absolute inset-0 h-full w-full object-cover"
+                  src={project.videoSrc}
+                  poster={project.posterSrc}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                />
+              ) : (
+                <img
+                  className="absolute inset-0 h-full w-full object-cover"
+                  src={project.posterSrc}
+                  alt={project.name}
+                />
+              )}
 
               {/* Dark gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />

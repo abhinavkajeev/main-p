@@ -12,14 +12,15 @@ import {
   Terminal,
   ArrowRight,
   Sparkles,
-  Globe,
-  CodeXml,
 } from "lucide-react";
 import { Waves } from "@/components/ui/wave-background";
 import HalideLanding from "@/components/ui/halide-topo-demo";
 import ExpandCards from "@/components/ui/expand-cards";
 import SchemaProjectCard from "@/components/ui/schema-project-card";
 import PixelCat from "@/components/ui/pixel-cat";
+import TechStack from "@/components/ui/tech-stack";
+import Hackathons from "@/components/ui/hackathons";
+import ContactForm from "@/components/ui/contact-form";
 
 /* ─────────────── SVG Social Icons ─────────────── */
 
@@ -46,6 +47,8 @@ const XTwitterSvg = ({ className = "" }: { className?: string }) => (
 const navLinks = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
+  { label: "Tech Stack", href: "#tech-stack" },
+  { label: "Hackathons", href: "#hackathons" },
   { label: "Projects", href: "#projects" },
   { label: "Contact", href: "#connect" },
 ];
@@ -63,80 +66,47 @@ const aboutDetails = {
   ],
 };
 
-const techStack = [
-  "TypeScript", "React", "Next.js", "Node.js",
-  "Solidity", "Rust", "Python", "Go",
-  "PostgreSQL", "Redis", "Docker", "AWS",
-  "Framer Motion", "Three.js", "TailwindCSS", "GraphQL",
-];
 
 const expandProjects = [
   {
+    name: "FinTrack",
+    summary: "Full-stack finance app with Spring Boot REST APIs, JWT auth, and a Next.js dashboard with real-time spending analytics.",
+    videoSrc: "",
+    posterSrc: "/fintrack.png",
+    tech: ["Java", "Spring Boot", "JWT", "Next.js", "MySQL"],
+  },
+  {
+    name: "QSNN Edge Robotics",
+    summary: "Phase-encoded quantum neural network for edge robotics inference — 20% reduction in power consumption vs classical SNNs.",
+    videoSrc: "",
+    posterSrc: "/qsnn.png",
+    tech: ["Python", "Qiskit", "ROS"],
+  },
+  {
     name: "MeshT",
-    summary: "Offline BLE mesh payment system — crypto transactions without internet via Bluetooth mesh networks.",
-    videoSrc: "https://videos.pexels.com/video-files/5532772/5532772-sd_640_360_25fps.mp4",
-    posterSrc: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=800&auto=format&fit=crop",
-    tech: ["React Native", "Solidity", "BLE", "Flow EVM"],
+    summary: "Offline P2P FinTech transaction system — BLE payment protocol with Solidity Smart Contracts. 100% transaction atomicity without internet.",
+    videoSrc: "",
+    posterSrc: "/mesht.png",
+    tech: ["Solidity", "BLE", "Ethereum"],
   },
   {
-    name: "Luminari Studio",
-    summary: "Cinematic portfolio engine with scroll-driven 3D parallax and topographic depth layers.",
-    videoSrc: "https://videos.pexels.com/video-files/3129671/3129671-sd_640_360_25fps.mp4",
-    posterSrc: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800&auto=format&fit=crop",
-    tech: ["Next.js", "Framer Motion", "3D CSS"],
-  },
-  {
-    name: "Signal Lattice",
-    summary: "Fintech analytics dashboard with depth-aware visualizations and real-time data streams.",
-    videoSrc: "https://videos.pexels.com/video-files/7579965/7579965-sd_640_360_25fps.mp4",
-    posterSrc: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop",
-    tech: ["React", "D3.js", "WebSocket", "Node.js"],
-  },
-  {
-    name: "Aurora Pay",
-    summary: "Cross-chain payment gateway with instant settlement and multi-wallet support.",
-    videoSrc: "https://videos.pexels.com/video-files/6963744/6963744-sd_640_360_25fps.mp4",
-    posterSrc: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=800&auto=format&fit=crop",
-    tech: ["Rust", "Solana", "React", "PostgreSQL"],
-  },
-  {
-    name: "Nexus AI",
-    summary: "AI-powered code review assistant with context-aware suggestions and auto-fixes.",
-    videoSrc: "https://videos.pexels.com/video-files/8721093/8721093-sd_640_360_25fps.mp4",
-    posterSrc: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=800&auto=format&fit=crop",
-    tech: ["Python", "LangChain", "Next.js", "Docker"],
+    name: "Student Analytics",
+    summary: "Real-time computer vision pipeline using OpenCV and React that increased data collection accuracy by 25%.",
+    videoSrc: "",
+    posterSrc: "/student-analytics.png",
+    tech: ["Python", "OpenCV", "React"],
   },
 ];
 
 const gridProjects = [
-  { name: "MeshT", summary: "Offline BLE mesh payment system — crypto transactions without internet via Bluetooth mesh networks. Integrated SMS notifications and UPI payouts.", tech: ["React Native", "Solidity", "BLE", "Flow EVM"], accentColor: "orange" },
-  { name: "Luminari Studio", summary: "Cinematic portfolio engine with scroll-driven 3D parallax, topographic depth layers, and custom wheel/touch event handlers.", tech: ["Next.js", "Framer Motion", "3D CSS", "TypeScript"], accentColor: "violet" },
-  { name: "Signal Lattice", summary: "Fintech analytics dashboard with depth-aware visualizations, real-time data streams, and interactive chart tiles.", tech: ["React", "D3.js", "WebSocket", "Node.js"], accentColor: "cyan" },
-  { name: "Aurora Pay", summary: "Cross-chain payment gateway with instant settlement, multi-wallet support, and gasless meta-transactions.", tech: ["Rust", "Solana", "React", "PostgreSQL"], accentColor: "emerald" },
-  { name: "Nexus AI", summary: "AI-powered code review assistant with context-aware suggestions, auto-fixes, and CI pipeline integration.", tech: ["Python", "LangChain", "Next.js", "Docker"], accentColor: "pink" },
-  { name: "DevForge", summary: "Developer collaboration platform with real-time pair programming, Git-integrated workspace, and AI-assisted debugging tools.", tech: ["Go", "WebRTC", "React", "Redis"], accentColor: "indigo" },
+  { name: "FinTrack", summary: "Built a full-stack finance app with Spring Boot REST APIs, JWT auth, and role-based access control for secure multi-user transactions. Implemented budget alerts, paginated transaction history, and a Next.js dashboard with real-time spending analytics.", tech: ["Java", "Spring Boot", "JWT", "Next.js", "MySQL"], accentColor: "emerald", imageSrc: "/fintrack.png" },
+  { name: "QSNN Edge Robotics", summary: "Designed a phase-encoded quantum neural network for edge robotics inference. Achieved 20% reduction in power consumption compared to classical SNNs on constrained hardware.", tech: ["Python", "Qiskit", "ROS"], accentColor: "violet", imageSrc: "/qsnn.png" },
+  { name: "MeshT", summary: "Architected a Bluetooth Low Energy (BLE) payment protocol with Solidity Smart Contracts. Ensured 100% transaction atomicity and decentralized settlement without internet access.", tech: ["Solidity", "BLE", "Ethereum"], accentColor: "orange", imageSrc: "/mesht.png" },
+  { name: "Student Analytics", summary: "Built a real-time computer vision pipeline using OpenCV and React that increased data collection accuracy by 25%. Automated student attendance and engagement tracking.", tech: ["Python", "OpenCV", "React"], accentColor: "cyan", imageSrc: "/student-analytics.png" },
 ];
 
-const contactActions = [
-  {
-    label: "Email me",
-    href: "mailto:abhinavka@example.com",
-    tone: "Let's talk about your next project",
-    icon: Mail,
-  },
-  {
-    label: "GitHub",
-    href: "https://github.com",
-    tone: "Check out my open source work",
-    icon: CodeXml,
-  },
-  {
-    label: "LinkedIn",
-    href: "https://linkedin.com",
-    tone: "Let's connect professionally",
-    icon: Globe,
-  },
-];
+
+
 
 /* ─────────────── Animation Variants ─────────────── */
 
@@ -206,7 +176,7 @@ export default function Home() {
         {/* Wave Background */}
         <Waves
           className="h-full w-full"
-          strokeColor="rgba(255, 255, 255, 0.3)"
+          strokeColor="rgba(255, 255, 255, 0.12)"
           backgroundColor="#000000"
         />
 
@@ -215,7 +185,7 @@ export default function Home() {
           className="pointer-events-none absolute inset-0 z-[1]"
           style={{
             background:
-              "radial-gradient(ellipse at 30% 50%, rgba(249,115,22,0.15) 0%, transparent 50%), radial-gradient(ellipse at 70% 30%, rgba(168,85,247,0.12) 0%, transparent 40%)",
+              "radial-gradient(ellipse at 30% 50%, rgba(249,115,22,0.06) 0%, transparent 60%), radial-gradient(ellipse at 70% 30%, rgba(168,85,247,0.04) 0%, transparent 50%)",
           }}
         />
 
@@ -303,7 +273,7 @@ export default function Home() {
               {/* Social Icons inline */}
               <div className="flex items-center gap-3 ml-2">
                 <Link
-                  href="https://github.com"
+                  href="https://github.com/abhinavkajeev"
                   target="_blank"
                   rel="noreferrer"
                   className="group rounded-full border border-white/10 p-2.5 transition hover:border-white/30 hover:bg-white/[0.06]"
@@ -312,7 +282,7 @@ export default function Home() {
                   <GitHubSvg className="h-4.5 w-4.5 text-white/40 transition group-hover:text-white" />
                 </Link>
                 <Link
-                  href="https://linkedin.com"
+                  href="https://www.linkedin.com/in/abhinav-ka-a05ba1376/"
                   target="_blank"
                   rel="noreferrer"
                   className="group rounded-full border border-white/10 p-2.5 transition hover:border-white/30 hover:bg-white/[0.06]"
@@ -431,23 +401,16 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Tech stack ribbon */}
-            <motion.div variants={fadeUp} custom={8} className="mt-14">
-              <p className="mb-4 text-xs uppercase tracking-[0.4em] text-white/30">Tech I work with</p>
-              <div className="flex flex-wrap gap-2">
-                {techStack.map((tech) => (
-                  <span
-                    key={tech}
-                    className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-1.5 text-xs text-white/50 transition hover:border-white/25 hover:text-white/70"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
+
           </motion.div>
         </HalideLanding>
       </section>
+
+      {/* ━━━━━ TECH STACK ━━━━━ */}
+      <TechStack />
+
+      {/* ━━━━━ HACKATHONS ━━━━━ */}
+      <Hackathons />
 
       {/* ━━━━━ PROJECTS ━━━━━ */}
       <main className="mx-auto flex max-w-6xl flex-col gap-24 px-6 py-20 sm:px-10 lg:px-0">
@@ -491,6 +454,7 @@ export default function Home() {
                       summary={project.summary}
                       tech={project.tech}
                       accentColor={project.accentColor}
+                      imageSrc={project.imageSrc}
                     />
                   </motion.div>
                 ))}
@@ -506,42 +470,115 @@ export default function Home() {
           id="connect"
           className="relative overflow-hidden rounded-[32px] border border-orange-500/20 bg-gradient-to-br from-[#0b1220]/90 to-[#1a0a2e]/90 p-8 shadow-[0_50px_120px_rgba(0,0,0,0.7)] sm:p-12"
         >
+          {/* Background glows */}
           <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-orange-500/10 blur-[100px]" />
           <div className="pointer-events-none absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-purple-500/10 blur-[80px]" />
+          <div className="pointer-events-none absolute right-1/4 top-1/2 h-32 w-32 rounded-full bg-pink-500/5 blur-[60px]" />
 
-          <div className="relative z-10 space-y-8">
-            <div className="space-y-3">
+          <div className="relative z-10">
+            {/* Header */}
+            <div className="space-y-3 mb-10">
               <div className="flex items-center gap-3">
                 <Sparkles className="h-4 w-4 text-orange-400" />
-                <p className="text-xs uppercase tracking-[0.6em] text-white/60">Let&apos;s Connect</p>
+                <p className="text-xs uppercase tracking-[0.6em] text-white/60">Get in Touch</p>
               </div>
               <h2 className="text-3xl font-bold text-white sm:text-4xl">
-                Got a project in mind?
+                Let&apos;s build something{" "}
+                <span className="bg-gradient-to-r from-orange-400 to-pink-500 bg-clip-text text-transparent">
+                  extraordinary
+                </span>
               </h2>
-              <p className="max-w-xl text-sm leading-relaxed text-white/60">
-                I&apos;m always interested in hearing about new projects, creative ideas, or opportunities
-                to be part of something amazing. Let&apos;s create something extraordinary together.
+              <p className="max-w-xl text-sm leading-relaxed text-white/50">
+                Have a project in mind, an idea to explore, or just want to say hello?
+                Fill out the form and I&apos;ll get back to you within 24 hours.
               </p>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-3">
-              {contactActions.map((action) => (
-                <Link
-                  key={action.label}
-                  href={action.href}
-                  target={action.href.startsWith("http") ? "_blank" : undefined}
-                  rel={action.href.startsWith("http") ? "noreferrer" : undefined}
-                  className="group flex items-center gap-4 rounded-[20px] border border-white/10 bg-white/[0.03] p-5 transition hover:border-white/30 hover:bg-white/[0.06]"
-                >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500/20 to-pink-500/20 transition group-hover:from-orange-500/30 group-hover:to-pink-500/30">
-                    <action.icon className="h-5 w-5 text-orange-400" />
+            {/* Two-column layout: Form + Info sidebar */}
+            <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
+              {/* Left — Contact Form */}
+              <div>
+                <ContactForm />
+              </div>
+
+              {/* Right — Info Sidebar */}
+              <div className="space-y-5">
+                {/* Availability status */}
+                <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-5">
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="relative flex h-3 w-3">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                      <span className="relative inline-flex h-3 w-3 rounded-full bg-emerald-500" />
+                    </span>
+                    <span className="text-sm font-medium text-emerald-400">Available for work</span>
                   </div>
-                  <div className="flex flex-col text-left">
-                    <span className="text-sm font-semibold text-white">{action.label}</span>
-                    <span className="text-xs text-white/40">{action.tone}</span>
+                  <p className="text-xs leading-relaxed text-white/40">
+                    Currently open to freelance projects, collaborations, and full-time opportunities.
+                  </p>
+                </div>
+
+                {/* Response time */}
+                <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-5">
+                  <p className="text-[10px] uppercase tracking-[0.3em] text-white/30 mb-3">Average Response</p>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-2xl font-bold text-white">~24</span>
+                    <span className="text-sm text-white/40">hours</span>
                   </div>
-                </Link>
-              ))}
+                  <div className="mt-3 h-1 w-full overflow-hidden rounded-full bg-white/[0.06]">
+                    <div className="h-full w-3/4 rounded-full bg-gradient-to-r from-orange-500 to-pink-500" />
+                  </div>
+                </div>
+
+                {/* Social links */}
+                <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-5">
+                  <p className="text-[10px] uppercase tracking-[0.3em] text-white/30 mb-4">Connect Elsewhere</p>
+                  <div className="space-y-2">
+                    <Link
+                      href="mailto:abhiajeev@gmail.com"
+                      className="group flex items-center gap-3 rounded-xl p-3 transition hover:bg-white/[0.05]"
+                    >
+                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-orange-500/20 to-pink-500/20 transition group-hover:from-orange-500/30 group-hover:to-pink-500/30">
+                        <Mail className="h-4 w-4 text-orange-400" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-white">Email</p>
+                        <p className="text-[11px] text-white/35">abhiajeev@gmail.com</p>
+                      </div>
+                      <ArrowRight className="ml-auto h-3.5 w-3.5 text-white/20 transition-all group-hover:translate-x-1 group-hover:text-white/50" />
+                    </Link>
+                    <Link
+                      href="https://github.com/abhinavkajeev"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="group flex items-center gap-3 rounded-xl p-3 transition hover:bg-white/[0.05]"
+                    >
+                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-orange-500/20 to-pink-500/20 transition group-hover:from-orange-500/30 group-hover:to-pink-500/30">
+                        <GitHubSvg className="h-4 w-4 text-orange-400" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-white">GitHub</p>
+                        <p className="text-[11px] text-white/35">@abhinavkajeev</p>
+                      </div>
+                      <ArrowRight className="ml-auto h-3.5 w-3.5 text-white/20 transition-all group-hover:translate-x-1 group-hover:text-white/50" />
+                    </Link>
+                    <Link
+                      href="https://www.linkedin.com/in/abhinav-ka-a05ba1376/"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="group flex items-center gap-3 rounded-xl p-3 transition hover:bg-white/[0.05]"
+                    >
+                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-orange-500/20 to-pink-500/20 transition group-hover:from-orange-500/30 group-hover:to-pink-500/30">
+                        <LinkedInSvg className="h-4 w-4 text-orange-400" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-white">LinkedIn</p>
+                        <p className="text-[11px] text-white/35">Abhinav KA</p>
+                      </div>
+                      <ArrowRight className="ml-auto h-3.5 w-3.5 text-white/20 transition-all group-hover:translate-x-1 group-hover:text-white/50" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>

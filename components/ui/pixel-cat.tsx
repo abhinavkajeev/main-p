@@ -66,7 +66,12 @@ export default function PixelCat() {
       }
     } else {
       idleCountRef.current++;
-      if (idleCountRef.current > 20) {
+      if (idleCountRef.current > 300) {
+        // ~5 seconds idle → sleep!
+        setFlip(false);
+        const breathe = Math.floor(tickRef.current / 40) % 2;
+        setFrame(breathe === 0 ? "sleep0" : "sleep1");
+      } else if (idleCountRef.current > 20) {
         setFlip(false);
         const blink = tickRef.current % 150 < 8;
         setFrame(blink ? "front-blink" : "front-sit");
@@ -99,13 +104,72 @@ export default function PixelCat() {
     };
   }, [updateFrame]);
 
+  const isSleeping = frame.startsWith("sleep");
+
   return (
     <div
       ref={catRef}
       className="pointer-events-none fixed z-50"
       style={{ willChange: "transform", imageRendering: "pixelated" }}
     >
+      {/* Floating Zzz animation */}
+      {isSleeping && (
+        <div className="absolute -top-2 left-1/2 -translate-x-1/2" style={{ imageRendering: "auto" }}>
+          <span
+            className="absolute text-[10px] font-bold text-white/60"
+            style={{
+              animation: "zzz-float 2.4s ease-in-out infinite",
+              left: 0,
+              top: 0,
+            }}
+          >
+            z
+          </span>
+          <span
+            className="absolute text-[8px] font-bold text-white/40"
+            style={{
+              animation: "zzz-float 2.4s ease-in-out 0.6s infinite",
+              left: 8,
+              top: -2,
+            }}
+          >
+            z
+          </span>
+          <span
+            className="absolute text-[6px] font-bold text-white/25"
+            style={{
+              animation: "zzz-float 2.4s ease-in-out 1.2s infinite",
+              left: 14,
+              top: -4,
+            }}
+          >
+            z
+          </span>
+        </div>
+      )}
       <CatSprite frame={frame} />
+
+      {/* Zzz keyframes */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes zzz-float {
+          0% {
+            opacity: 0;
+            transform: translateY(0px) scale(0.7);
+          }
+          20% {
+            opacity: 1;
+            transform: translateY(-4px) scale(1);
+          }
+          80% {
+            opacity: 0.6;
+            transform: translateY(-14px) scale(1.1);
+          }
+          100% {
+            opacity: 0;
+            transform: translateY(-20px) scale(0.8);
+          }
+        }
+      `}} />
     </div>
   );
 }
@@ -492,6 +556,70 @@ function CatSprite({ frame }: { frame: string }) {
         {b(5,11,W)}{b(5,12,W)}
         {b(11,11,W)}{b(11,12,W)}
         {b(3,9,W)}{b(2,9,T)}{b(1,8,T)}
+      </svg>
+    ),
+
+    /* ════════════ SLEEP — curled up, eyes closed ════════════ */
+    /* Two frames alternate for a gentle breathing animation */
+
+    "sleep0": (
+      <svg width={SZ} height={SZ} viewBox={vbFront}>
+        {/* Ears — relaxed, droopy */}
+        {b(3,2,W)}{b(4,2,W)}{b(11,2,W)}{b(12,2,W)}
+        {b(3,3,W)}{b(4,3,K)}{b(11,3,K)}{b(12,3,W)}
+        {/* Head resting */}
+        {row([3,4,5,6,7,8,9,10,11,12],4,W)}
+        {row([2,3,4,5,6,7,8,9,10,11,12,13],5,W)}
+        {row([2,3,4,5,6,7,8,9,10,11,12,13],6,W)}
+        {row([2,3,4,5,6,7,8,9,10,11,12,13],7,W)}
+        {row([3,4,5,6,7,8,9,10,11,12],8,W)}
+        {/* Closed eyes — happy sleep lines */}
+        {b(4,6,E)}{b(5,6,E)}{b(6,6,E)}
+        {b(9,6,E)}{b(10,6,E)}{b(11,6,E)}
+        {/* Nose */}
+        {b(7,8,K)}{b(8,8,K)}
+        {/* Blush */}
+        {b(2,7,K)}{b(13,7,K)}
+        {/* Body curled — compact */}
+        {row([4,5,6,7,8,9,10,11],9,W)}
+        {row([3,4,5,6,7,8,9,10,11,12],10,W)}
+        {row([3,4,5,6,7,8,9,10,11,12],11,W)}
+        {b(5,10,F)}{b(6,10,F)}{b(7,10,F)}{b(8,10,F)}
+        {/* Paws tucked in front */}
+        {b(4,12,W)}{b(5,12,W)}{b(10,12,W)}{b(11,12,W)}
+        {/* Tail wrapping around */}
+        {b(13,10,W)}{b(14,10,W)}{b(14,11,T)}{b(13,12,T)}{b(12,12,T)}
+      </svg>
+    ),
+
+    "sleep1": (
+      <svg width={SZ} height={SZ} viewBox={vbFront}>
+        {/* Ears — relaxed */}
+        {b(3,2,W)}{b(4,2,W)}{b(11,2,W)}{b(12,2,W)}
+        {b(3,3,W)}{b(4,3,K)}{b(11,3,K)}{b(12,3,W)}
+        {/* Head resting */}
+        {row([3,4,5,6,7,8,9,10,11,12],4,W)}
+        {row([2,3,4,5,6,7,8,9,10,11,12,13],5,W)}
+        {row([2,3,4,5,6,7,8,9,10,11,12,13],6,W)}
+        {row([2,3,4,5,6,7,8,9,10,11,12,13],7,W)}
+        {row([3,4,5,6,7,8,9,10,11,12],8,W)}
+        {/* Closed eyes */}
+        {b(4,6,E)}{b(5,6,E)}{b(6,6,E)}
+        {b(9,6,E)}{b(10,6,E)}{b(11,6,E)}
+        {/* Nose */}
+        {b(7,8,K)}{b(8,8,K)}
+        {/* Blush */}
+        {b(2,7,K)}{b(13,7,K)}
+        {/* Body curled — slightly expanded (breathing) */}
+        {row([4,5,6,7,8,9,10,11],9,W)}
+        {row([3,4,5,6,7,8,9,10,11,12],10,W)}
+        {row([3,4,5,6,7,8,9,10,11,12],11,W)}
+        {row([4,5,6,7,8,9,10,11],12,W)}
+        {b(5,10,F)}{b(6,10,F)}{b(7,10,F)}{b(8,10,F)}{b(9,10,F)}
+        {/* Paws */}
+        {b(4,12,W)}{b(11,12,W)}
+        {/* Tail */}
+        {b(13,10,W)}{b(14,10,W)}{b(14,11,T)}{b(13,12,T)}{b(12,12,T)}
       </svg>
     ),
   };

@@ -8,6 +8,8 @@ interface SchemaProjectCardProps {
   tech: string[];
   accentColor?: string;
   link?: string;
+  videoSrc?: string;
+  imageSrc?: string;
 }
 
 export default function SchemaProjectCard({
@@ -16,6 +18,8 @@ export default function SchemaProjectCard({
   tech,
   accentColor = "indigo",
   link = "#",
+  videoSrc,
+  imageSrc,
 }: SchemaProjectCardProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -108,12 +112,30 @@ export default function SchemaProjectCard({
 
   return (
     <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-black/60 backdrop-blur-sm transition hover:border-white/20 hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
-      {/* Wave canvas preview */}
+      {/* Preview: video or wave canvas */}
       <div className="relative h-40 overflow-hidden">
-        <canvas
-          ref={canvasRef}
-          className="absolute inset-0 h-full w-full"
-        />
+        {videoSrc ? (
+          <video
+            className="absolute inset-0 h-full w-full object-cover"
+            src={videoSrc}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+          />
+        ) : imageSrc ? (
+          <img
+            className="absolute inset-0 h-full w-full object-cover"
+            src={imageSrc}
+            alt={name}
+          />
+        ) : (
+          <canvas
+            ref={canvasRef}
+            className="absolute inset-0 h-full w-full"
+          />
+        )}
         {/* Grid overlay */}
         <div
           className="absolute inset-0 opacity-[0.06]"
