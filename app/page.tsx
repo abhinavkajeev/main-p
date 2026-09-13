@@ -140,55 +140,76 @@ export default function Home() {
           <motion.div
             key="loader"
             className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#000000]"
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.6, ease: "easeInOut" }}
+            exit={{ opacity: 0, scale: 1.05 }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
           >
             {/* Ambient glow */}
             <div className="pointer-events-none absolute inset-0">
-              <div className="absolute left-1/2 top-1/2 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-orange-500/[0.07] blur-[120px]" />
-              <div className="absolute left-1/3 top-1/3 h-[200px] w-[200px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-500/[0.05] blur-[80px]" />
+              <div className="absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-orange-500/[0.08] blur-[150px]" />
+              <div className="absolute left-[40%] top-[40%] h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-500/[0.06] blur-[100px]" />
             </div>
 
-            {/* Logo / Name */}
+            {/* Center content */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="relative z-10 flex flex-col items-center gap-6"
+              className="relative z-10 flex flex-col items-center gap-8"
             >
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 2, ease: "linear", repeat: Infinity }}
-                className="h-12 w-12 rounded-xl border-2 border-transparent"
-                style={{
-                  borderImage: "linear-gradient(135deg, #f97316, #ec4899, #8b5cf6) 1",
-                }}
-              />
+              {/* Spinning ring */}
+              <div className="relative h-16 w-16">
+                <motion.svg
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1.5, ease: "linear", repeat: Infinity }}
+                  viewBox="0 0 64 64"
+                  className="h-full w-full"
+                >
+                  <defs>
+                    <linearGradient id="loaderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#f97316" />
+                      <stop offset="50%" stopColor="#ec4899" />
+                      <stop offset="100%" stopColor="#8b5cf6" />
+                    </linearGradient>
+                  </defs>
+                  <circle
+                    cx="32" cy="32" r="28"
+                    fill="none"
+                    stroke="url(#loaderGrad)"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeDasharray="120 60"
+                  />
+                </motion.svg>
+                {/* Center dot */}
+                <div className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-orange-400 to-pink-500" />
+              </div>
+
+              {/* Name */}
               <motion.h1
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.5 }}
-                className="text-2xl font-bold tracking-tight text-white"
+                className="text-3xl font-bold tracking-tight text-white"
               >
                 Abhinav
                 <span className="bg-gradient-to-r from-orange-400 to-pink-500 bg-clip-text text-transparent"> KA</span>
               </motion.h1>
 
               {/* Progress bar */}
-              <div className="h-[2px] w-48 overflow-hidden rounded-full bg-white/[0.06]">
+              <div className="h-[2px] w-56 overflow-hidden rounded-full bg-white/[0.08]">
                 <motion.div
                   initial={{ width: "0%" }}
                   animate={{ width: "100%" }}
                   transition={{ duration: 1.8, ease: "easeInOut", delay: 0.2 }}
-                  className="h-full rounded-full bg-gradient-to-r from-orange-500 via-pink-500 to-purple-500"
+                  className="h-full rounded-full bg-gradient-to-r from-orange-500 via-pink-500 to-purple-500 shadow-[0_0_12px_rgba(249,115,22,0.5)]"
                 />
               </div>
 
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.5, duration: 0.4 }}
-                className="text-[11px] uppercase tracking-[0.5em] text-white/25"
+                transition={{ delay: 0.6, duration: 0.4 }}
+                className="text-[11px] uppercase tracking-[0.5em] text-white/30"
               >
                 Loading experience
               </motion.p>
