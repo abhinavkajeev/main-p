@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { AnimatePresence } from "framer-motion";
 
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -36,11 +37,7 @@ const LinkedInSvg = ({ className = "" }: { className?: string }) => (
   </svg>
 );
 
-const XTwitterSvg = ({ className = "" }: { className?: string }) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-  </svg>
-);
+
 
 /* ─────────────── Data ─────────────── */
 
@@ -128,8 +125,78 @@ const stagger = {
 
 export default function Home() {
   const [viewAll, setViewAll] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 2200);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
+    <>
+      {/* ━━━━━ LOADING SCREEN ━━━━━ */}
+      <AnimatePresence>
+        {isLoading && (
+          <motion.div
+            key="loader"
+            className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#000000]"
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.6, ease: "easeInOut" }}
+          >
+            {/* Ambient glow */}
+            <div className="pointer-events-none absolute inset-0">
+              <div className="absolute left-1/2 top-1/2 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-orange-500/[0.07] blur-[120px]" />
+              <div className="absolute left-1/3 top-1/3 h-[200px] w-[200px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-500/[0.05] blur-[80px]" />
+            </div>
+
+            {/* Logo / Name */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="relative z-10 flex flex-col items-center gap-6"
+            >
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 2, ease: "linear", repeat: Infinity }}
+                className="h-12 w-12 rounded-xl border-2 border-transparent"
+                style={{
+                  borderImage: "linear-gradient(135deg, #f97316, #ec4899, #8b5cf6) 1",
+                }}
+              />
+              <motion.h1
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.5 }}
+                className="text-2xl font-bold tracking-tight text-white"
+              >
+                Abhinav
+                <span className="bg-gradient-to-r from-orange-400 to-pink-500 bg-clip-text text-transparent"> KA</span>
+              </motion.h1>
+
+              {/* Progress bar */}
+              <div className="h-[2px] w-48 overflow-hidden rounded-full bg-white/[0.06]">
+                <motion.div
+                  initial={{ width: "0%" }}
+                  animate={{ width: "100%" }}
+                  transition={{ duration: 1.8, ease: "easeInOut", delay: 0.2 }}
+                  className="h-full rounded-full bg-gradient-to-r from-orange-500 via-pink-500 to-purple-500"
+                />
+              </div>
+
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5, duration: 0.4 }}
+                className="text-[11px] uppercase tracking-[0.5em] text-white/25"
+              >
+                Loading experience
+              </motion.p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
     <div className="bg-[#000000] text-white">
       {/* ━━━━━ Pixel Cat follows cursor ━━━━━ */}
       <PixelCat />
@@ -290,15 +357,7 @@ export default function Home() {
                 >
                   <LinkedInSvg className="h-4.5 w-4.5 text-white/40 transition group-hover:text-white" />
                 </Link>
-                <Link
-                  href="https://x.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group rounded-full border border-white/10 p-2.5 transition hover:border-white/30 hover:bg-white/[0.06]"
-                  aria-label="X (Twitter)"
-                >
-                  <XTwitterSvg className="h-4.5 w-4.5 text-white/40 transition group-hover:text-white" />
-                </Link>
+
               </div>
             </motion.div>
 
@@ -592,5 +651,6 @@ export default function Home() {
         </footer>
       </main>
     </div>
+    </>
   );
 }
