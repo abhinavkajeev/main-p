@@ -22,15 +22,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const WEB3FORMS_KEY = process.env.WEB3FORMS_KEY;
-
-    if (!WEB3FORMS_KEY) {
-      console.error("❌ WEB3FORMS_KEY not set in environment variables");
-      return NextResponse.json(
-        { error: "Email service is not configured." },
-        { status: 500 }
-      );
-    }
+    const WEB3FORMS_KEY = "9759aae2-4824-48a8-b3a0-b39ec6aa8f86";
 
     // Send via Web3Forms API
     const res = await fetch("https://api.web3forms.com/submit", {
