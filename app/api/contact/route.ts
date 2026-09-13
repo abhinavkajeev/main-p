@@ -74,18 +74,13 @@ export async function POST(request: Request) {
       `,
     };
 
-    // If env vars aren't configured, log and return success for dev
+    // If env vars aren't configured, return an error
     if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
-      console.log("📧 Contact form submission (email not configured):", {
-        name,
-        email,
-        subject,
-        message,
-      });
-      return NextResponse.json({
-        success: true,
-        message: "Message received! (Email delivery not configured yet)",
-      });
+      console.error("❌ GMAIL_USER or GMAIL_APP_PASSWORD not set in environment variables");
+      return NextResponse.json(
+        { error: "Email service is not configured. Please set environment variables." },
+        { status: 500 }
+      );
     }
 
     await transporter.sendMail(mailOptions);
