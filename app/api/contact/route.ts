@@ -24,28 +24,45 @@ export async function POST(request: Request) {
 
     const WEB3FORMS_KEY = "9759aae2-4824-48a8-b3a0-b39ec6aa8f86";
 
-    // Send via Web3Forms API
+    const formData = {
+      access_key: WEB3FORMS_KEY,
+      name,
+      email,
+      subject: subject
+        ? `Portfolio: ${subject}`
+        : `Portfolio Contact from ${name}`,
+      message,
+      from_name: "Portfolio Contact Form",
+      replyto: email,
+    };
+
+    // Send via Web3Forms API with explicit headers and cache bypass
     const res = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        access_key: WEB3FORMS_KEY,
-        name,
-        email,
-        subject: subject
-          ? `Portfolio: ${subject}`
-          : `Portfolio Contact from ${name}`,
-        message,
-        from_name: "Portfolio Contact Form",
-        replyto: email,
-      }),
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
+      body: JSON.stringify(formData),
+      cache: "no-store",
     });
+
+    // Check if we got HTML back instead of JSON (proxy/redirect issue)
+    const contentType = res.headers.get("content-type") || "";
+    if (!contentType.includes("application/json")) {
+      const text = await res.text();
+      console.error("Non-JSON response from Web3Forms:", text.substring(0, 200));
+      return NextResponse.json(
+        { error: "Email service returned unexpected response. Status: " + res.status },
+        { status: 502 }
+      );
+    }
 
     const data = await res.json();
 
     if (!data.success) {
       return NextResponse.json(
-        { error: data.message || "Web3Forms submission failed", details: data },
+        { error: data.message || "Failed to send message." },
         { status: 500 }
       );
     }

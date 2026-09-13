@@ -39,16 +39,29 @@ export default function ContactForm() {
     setErrorMessage("");
 
     try {
-      const res = await fetch("/api/contact", {
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+        body: JSON.stringify({
+          access_key: "9759aae2-4824-48a8-b3a0-b39ec6aa8f86",
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject
+            ? `Portfolio: ${formData.subject}`
+            : `Portfolio Contact from ${formData.name}`,
+          message: formData.message,
+          from_name: "Portfolio Contact Form",
+          replyto: formData.email,
+        }),
       });
 
       const data = await res.json();
 
-      if (!res.ok) {
-        throw new Error(data.error || "Something went wrong");
+      if (!data.success) {
+        throw new Error(data.message || "Something went wrong");
       }
 
       setStatus("success");
