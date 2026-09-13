@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 
 export default function PixelCat() {
   const catRef = useRef<HTMLDivElement>(null);
@@ -267,7 +267,7 @@ function CatSprite({ frame }: { frame: string }) {
     </>
   );
 
-  const sprites: Record<string, JSX.Element> = {
+  const sprites: Record<string, React.JSX.Element> = {
 
     /* ════════════ FRONT SIT ════════════ */
     "front-sit": (
