@@ -44,7 +44,10 @@ export async function POST(request: Request) {
     const data = await res.json();
 
     if (!data.success) {
-      throw new Error(data.message || "Web3Forms submission failed");
+      return NextResponse.json(
+        { error: data.message || "Web3Forms submission failed", details: data },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json({
@@ -52,9 +55,10 @@ export async function POST(request: Request) {
       message: "Message sent successfully!",
     });
   } catch (error) {
-    console.error("Contact form error:", error);
+    const errorMsg = error instanceof Error ? error.message : String(error);
+    console.error("Contact form error:", errorMsg);
     return NextResponse.json(
-      { error: "Failed to send message. Please try again later." },
+      { error: errorMsg },
       { status: 500 }
     );
   }
